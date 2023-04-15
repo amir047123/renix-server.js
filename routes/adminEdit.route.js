@@ -1,78 +1,55 @@
 const express = require('express');
 const router = express.Router();
+const topNavbar = require('../controllers/topNavbar.controller')
+const heroSection = require('../controllers/heroSection.controller')
+const healthSection = require('../controllers/healthSection.controller')
+const homeAboutSection = require('../controllers/homeAboutSection.controller')
+const subscribeSection = require('../controllers/subscribeSection.controller')
+const doctorsSection = require('../controllers/doctorsSection.controller')
+const contactSection = require('../controllers/contactSection.controller')
+const footerSection = require('../controllers/footerSection.controller')
+
 
 router
 .route('/topNavbar') 
-.get((req,res)=>{
-    res.send('Top nav bar get found')
-})
-.post((req,res)=>{
-    res.send('Top nav bar post found')
-})
+.get(topNavbar.getTopNavbar)
+.post(topNavbar.editTopNavbar)
 
 router
 .route('/heroSection') 
-.get((req,res)=>{
-    res.send('heroSection get found')
-})
-.post((req,res)=>{
-    res.send('heroSection post found')
-})
+.get(heroSection.getHeroSection)
+.post(heroSection.editHeroSection)
 
 
 router
 .route('/healthSection') 
-.get((req,res)=>{
-    res.send('healthSection get found')
-})
-.post((req,res)=>{
-    res.send('healthSection post found')
-})
+.get(healthSection.getHealthSection)
+.post(healthSection.editHealthSection)
 
 router
 .route('/homeAboutSection') 
-.get((req,res)=>{
-    res.send('homeAboutSection get found')
-})
-.post((req,res)=>{
-    res.send('homeAboutSection post found')
-})
+.get(homeAboutSection.getHomeAboutSection)
+.post(homeAboutSection.editHomeAboutSection)
 
 router
 .route('/subscribeSection') 
-.get((req,res)=>{
-    res.send('subscribeSection get found')
-})
-.post((req,res)=>{
-    res.send('subscribeSection post found')
-})
+.get(subscribeSection.getSubscribeSection)
+.post(subscribeSection.editSubscribeSection)
 
 router
 .route('/doctorsSection') 
-.get((req,res)=>{
-    res.send('doctorsSection get found')
-})
-.post((req,res)=>{
-    res.send('doctorsSection post found')
-})
+.get(doctorsSection.getDoctorsSection)
+.post(doctorsSection.editDoctorsSection)
 
 router
 .route('/contactSection') 
-.get((req,res)=>{
-    res.send('contactSection get found')
-})
-.post((req,res)=>{
-    res.send('contactSection post found')
-})
+.get(contactSection.getContactSection)
+.post(contactSection.editContactSection)
 
 router
 .route('/footerSection') 
-.get((req,res)=>{
-    res.send('footerSection get found')
-})
-.post((req,res)=>{
-    res.send('footerSection post found')
-})
+.get(footerSection.getFooterSection)
+.post(footerSection.editFooterSection)
 
 
 module.exports = router;
