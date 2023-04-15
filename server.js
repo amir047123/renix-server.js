@@ -9,6 +9,7 @@ mongoose.connect(process.env.DATABASE).then(() => {
   console.log(`Database connection is successful`.red.bold);
 });
 
+
 // server
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
