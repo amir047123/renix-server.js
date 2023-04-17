@@ -2,29 +2,33 @@ const mongoose = require('mongoose')
 const validator = require('validator');
 
 const topNavbarSchema = mongoose.Schema({
-    phone: [
+    phone: 
         {
-            type: String,
+            type: Array,
             trim: true,
+            required: [true, "Please provide phone"],
             maxLength: [25, "maxLength 25."],
             unique: true
         }
-    ],
-    time: [
+    ,
+    time: 
         {
-            type: String,
+            type: Array,
             trim: true,
+            required: [true, "Please provide time"],
             maxLength: [35, "maxLength 35."],
         }
-    ],
-    email: [
+    ,
+    email: 
         {
-            type: String,
+            type: Array,
             trim: true,
+            required: [true, "Please provide email"],
             maxLength: [50, "maxLength 50."],
-            validate: [validator.isEmail, 'Please provide a valid email']
+            lowercase: true,
+            validate: [validator.isEmail, 'Please fill a valid email address'],
         }
-    ]
+    
 },{
     timestamps: true
 })

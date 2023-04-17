@@ -1,4 +1,4 @@
-const TopNavbar = require("../models/topNavbar.model");
+const { updateTopNavbar } = require("../services/topNavbar.service");
 
 module.exports.getTopNavbar = (req, res) => {
   res.send("Top nav bar get found");
@@ -6,17 +6,18 @@ module.exports.getTopNavbar = (req, res) => {
 
 module.exports.editTopNavbar = async (req, res) => {
   try {
-    const result = new TopNavbar(req.body);
-    await result.save();
+    console.log(req.body)
+    const result = await updateTopNavbar(req.body)
+    console.log(result)
     res.send({
       status: "success",
-      error: "Top Navbar update successfully.",
+      message: "Top Navbar update successfully.",
     });
   } catch (error) {
     const {message} = error
     res.send({
       status: "fail",
-      error: message,
+      message: message,
     });
   }
 };
