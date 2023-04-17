@@ -1,23 +1,35 @@
-const { updateTopNavbar } = require("../services/topNavbar.service");
+const { updateTopNavbar, getTopNavSectionService } = require("../services/topNavbar.service");
 
-module.exports.getTopNavbar = (req, res) => {
-  res.send("Top nav bar get found");
+module.exports.getTopNavbar = async(req, res) => {
+  try{
+    const result = await getTopNavSectionService();
+    res.status(200).json({
+        status: 'success',
+        message: 'Wow! successfully found your Top nav section data.',
+        data: result
+    })
+} 
+catch(error) {
+    res.status(400).json({ 
+        status: 'error',
+        message: 'Data not found.',
+    })
+}
 };
 
 module.exports.editTopNavbar = async (req, res) => {
-  try {
-    console.log(req.body)
-    const result = await updateTopNavbar(req.body)
-    console.log(result)
-    res.send({
-      status: "success",
-      message: "Top Navbar update successfully.",
-    });
-  } catch (error) {
-    const {message} = error
-    res.send({
-      status: "fail",
-      message: message,
-    });
-  }
+  try{
+    const topNav = await updateTopNavbar(req.body);
+    res.status(200).json({
+        status: 'success',
+        message: 'Wow! successfully update your Top Nav section.',
+        data: topNav
+    })
+} 
+catch(error) {
+    res.status(400).json({ 
+        status: 'error',
+        message: 'Oh sorry! we are not updated your data.',
+    })
+}
 };

@@ -13,7 +13,7 @@ const footerSection = require('../controllers/footerSection.controller')
 router
 .route('/topNavbar') 
 .get(topNavbar.getTopNavbar)
-.patch(topNavbar.editTopNavbar)
+.post(topNavbar.editTopNavbar)
 
 router
 .route('/heroSection') 
