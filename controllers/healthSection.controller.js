@@ -1,5 +1,7 @@
 const { updateHealthSectionService, getHealthSectionService } = require("../services/healthSection.service");
 
+
+//get health section information
 module.exports.getHealthSection = async(req,res)=>{
     try{
         const result = await getHealthSectionService();
@@ -16,6 +18,8 @@ module.exports.getHealthSection = async(req,res)=>{
         })
     }
 }
+
+//update health section
 module.exports.editHealthSection = async(req,res)=>{
     try{
         const result = await updateHealthSectionService(req.body);
