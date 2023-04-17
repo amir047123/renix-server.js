@@ -1,5 +1,6 @@
 const { getHomeAboutSectionService, updateHomeAbout } = require("../services/homeAbout.service");
 
+//get home about information
 module.exports.getHomeAboutSection = async(req,res)=>{
     try{
         const result = await getHomeAboutSectionService();
@@ -17,6 +18,7 @@ module.exports.getHomeAboutSection = async(req,res)=>{
     }
 }
 
+//update home about section 
 module.exports.editHomeAboutSection = async(req,res)=>{
     try{
         const result = await updateHomeAbout(req.body);

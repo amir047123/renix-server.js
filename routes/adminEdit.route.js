@@ -39,7 +39,7 @@ router
 router
 .route('/doctorsSection') 
 .get(doctorsSection.getDoctorsSection)
-.post(doctorsSection.editDoctorsSection)
+.post(doctorsSection.postDoctorsSection)
 
 router
 .route('/contactSection') 
