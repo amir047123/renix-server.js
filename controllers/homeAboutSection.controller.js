@@ -1,7 +1,35 @@
-module.exports.getHomeAboutSection =(req,res)=>{
-    res.send('homeAboutSection get found')
+const { getHomeAboutSectionService, updateHomeAbout } = require("../services/homeAbout.service");
+
+module.exports.getHomeAboutSection = async(req,res)=>{
+    try{
+        const result = await getHomeAboutSectionService();
+        res.status(200).json({
+            status: 'success',
+            message: 'Wow! successfully found your Home about data.',
+            data: result
+        })
+    } 
+    catch(error) {
+        res.status(400).json({ 
+            status: 'error',
+            message: 'Data not found.',
+        })
+    }
 }
 
-module.exports.editHomeAboutSection = (req,res)=>{
-    res.send('homeAboutSection post found')
+module.exports.editHomeAboutSection = async(req,res)=>{
+    try{
+        const result = await updateHomeAbout(req.body);
+        res.status(200).json({
+            status: 'success',
+            message: 'Wow! successfully update your home about section.',
+            data: result
+        })
+    } 
+    catch(error) {
+        res.status(400).json({ 
+            status: 'error',
+            message: 'Oh sorry! we are not updated your data.',
+        })
+    }
 }
