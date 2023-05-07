@@ -8,5 +8,10 @@ router
 .get(doctorsSection.getDoctorsSection)
 .post(doctorsSection.postDoctorsSection)
 
+router
+.route('/searchDoctors/:name') 
+.get(doctorsSection.getSearchDoctors)
+
+
 
 module.exports = router;

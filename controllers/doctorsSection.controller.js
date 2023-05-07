@@ -1,4 +1,4 @@
-const { createDoctorsService, getDoctorsService } = require("../services/doctors.service");
+const { createDoctorsService, getDoctorsService, getSearchDoctorsService } = require("../services/doctors.service");
 
 //get doctors information
 module.exports.getDoctorsSection = async(req,res)=>{
@@ -35,6 +35,25 @@ module.exports.postDoctorsSection = async(req,res)=>{
         res.status(400).json({ 
             status: 'error',
             message: 'Oh sorry! we are not insert your data.',
+        })
+    }
+}
+
+
+//get doctors information by search
+module.exports.getSearchDoctors = async(req,res)=>{
+    try{
+        const result = await getSearchDoctorsService(req.params.name);
+        res.status(200).json({
+            status: 'success',
+            message: 'Wow! successfully found your doctors data.',
+            data: result
+        })
+    } 
+    catch(error) {
+        res.status(400).json({ 
+            status: 'error',
+            message: 'Data not found.',
         })
     }
 }
