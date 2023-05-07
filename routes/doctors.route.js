@@ -9,8 +9,13 @@ router
 .post(doctorsSection.postDoctorsSection)
 
 router
+.route('/status') 
+.post(doctorsSection.changeDoctorsStatus)
+
+router
 .route('/searchDoctors/:name') 
 .get(doctorsSection.getSearchDoctors)
+
 
 
 

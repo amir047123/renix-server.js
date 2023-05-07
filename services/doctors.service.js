@@ -18,3 +18,11 @@ exports.getSearchDoctorsService = async(name) => {
   const cursor = await DoctorsSection.findOne({fullName: name})
   return cursor
 }
+
+//change doctors status service
+exports.changeDoctorsStatusService = async(id) => {
+  const previous = await DoctorsSection.findById(id.id)
+  console.log(previous)
+  const cursor = await DoctorsSection.updateOne({_id: id.id},{ $set: { status: !previous.status } })
+  return cursor
+}

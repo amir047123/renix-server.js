@@ -46,6 +46,9 @@ const doctorsSchema = mongoose.Schema({
     type: String,
     required: [true, 'Please provide your image.']
    },
+   status: {
+    type: Boolean
+   },
 },{
     collection: "doctors"
 },

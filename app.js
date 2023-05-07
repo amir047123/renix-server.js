@@ -18,7 +18,7 @@ app.get("/images/:filename", function (req, res) {
     var filename = req.params.filename;
     res.sendFile(__dirname + "/image/" + filename);
   });
-
+ 
 // route hit
 app.get("/", (req, res, next) => {
     res.send(`<h1 style="color:#242B2E;font-size:62px; text-align:center;margin-top:200px">"Database routing successfully"</h1>`);
