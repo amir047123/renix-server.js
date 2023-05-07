@@ -36,10 +36,10 @@ router
 .get(subscribeSection.getSubscribeSection)
 .post(subscribeSection.editSubscribeSection)
 
-router
-.route('/doctorsSection') 
-.get(doctorsSection.getDoctorsSection)
-.post(doctorsSection.postDoctorsSection)
+// router
+// .route('/doctorsSection') 
+// .get(doctorsSection.getDoctorsSection)
+// .post(doctorsSection.postDoctorsSection)
 
 router
 .route('/contactSection') 

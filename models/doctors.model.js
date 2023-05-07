@@ -1,17 +1,50 @@
 const mongoose = require('mongoose')
 
 const doctorsSchema = mongoose.Schema({
-   title: {
+    fullName: {
     type: String,
-    required: [true, 'Please provide your title.']
+    required: [true, 'Please provide your fullName.']
    },
-   subtitle: {
+   email: {
     type: String,
-    required: [true, 'Please provide your subtitle.']
+    required: [true, 'Please provide your email.']
    },
-   info: {
-    type: Array,
-    required: [true, 'Please provide your information.']
+   phone: {
+    type: String,
+    required: [true, 'Please provide your phone.']
+   },
+   address: {
+    type: String,
+    required: [true, 'Please provide your address.']
+   },
+   expertise: {
+    type: String,
+    required: [true, 'Please provide your expertise.']
+   },
+   description: {
+    type: String,
+    required: [true, 'Please provide your description.']
+   },
+
+   facebook: {
+    type: String,
+    required: [true, 'Please provide your facebook.']
+   },
+   linkedin: {
+    type: String,
+    required: [true, 'Please provide your linkedin.']
+   },
+   twitter: {
+    type: String,
+    required: [true, 'Please provide your twitter.']
+   },
+   youtube: {
+    type: String,
+    required: [true, 'Please provide your youtube.']
+   },
+   image: {
+    type: String,
+    required: [true, 'Please provide your image.']
    },
 },{
     collection: "doctors"

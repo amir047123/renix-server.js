@@ -22,7 +22,9 @@ module.exports.getDoctorsSection = async(req,res)=>{
 //insert doctors information
 module.exports.postDoctorsSection = async(req,res)=>{
     try{
+        console.log(req.body)
         const result = await createDoctorsService(req.body);
+        console.log(result)
         res.status(200).json({
             status: 'success',
             message: 'Wow! successfully insert your doctors information.',

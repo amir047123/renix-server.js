@@ -3,13 +3,16 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const adminEdit = require('./routes/adminEdit.route')
+const doctors = require('./routes/doctors.route');
+const imageUploadRoutes = require('./routes/imageUpload.route')
 
 // middleware
-app.use(express.json());
+app.use(express.json()); 
 app.use(cors());
 
-
+app.use("/api/v1/upload", imageUploadRoutes);
 app.use('/api/v1/adminEdit', adminEdit)
+app.use('/api/v1/doctors', doctors)
 
 // route hit
 app.get("/", (req, res, next) => {
