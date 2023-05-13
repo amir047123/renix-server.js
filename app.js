@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const adminEdit = require("./routes/adminEdit.route");
 const doctors = require("./routes/doctors.route");
 const imageUploadRoutes = require("./routes/imageUpload.route");
+const medicineRoute = require("./routes/medicine.route");
 
 // middleware
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(cors());
 app.use("/api/v1/upload", imageUploadRoutes);
 app.use("/api/v1/adminEdit", adminEdit);
 app.use("/api/v1/doctors", doctors);
+app.use("/api/v1/medicine", medicineRoute);
 //get image
 app.get("/images/:filename", function (req, res) {
   var filename = req.params.filename;
