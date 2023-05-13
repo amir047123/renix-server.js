@@ -7,21 +7,17 @@ const port = process.env.PORT || 8080;
 
 const start = async () => {
   try {
-
-    await mongoose.connect(process.env.DATABASE, {
+    await mongoose.connect(process.env.DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
 
     app.listen(port, () => {
-      console.log(`server is running on ${port}`)
+      console.log(`server is running on ${port}`);
     });
+  } catch (err) {
+    console.log(err);
   }
-  catch (err) {
-    console.log(err)
-  }
-}
+};
 
 start();
-
-
