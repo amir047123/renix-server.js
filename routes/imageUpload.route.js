@@ -9,4 +9,6 @@ router.post(
   imageUploadController.fileUpload
 );
 
+console.log(uploader);
+
 module.exports = router;
