@@ -1,9 +1,13 @@
 const express = require("express");
-const { createMedicine } = require("../controllers/medicine.controller");
+const {
+  createMedicine,
+  getMedicine,
+} = require("../controllers/medicine.controller");
 
 const router = express.Router();
 
 // router.route("/").get(getProperty).post(createProperty);
-router.route("/").post(createMedicine);
+router.route("/").get(getMedicine);
+router.route("/postMedicine").post(createMedicine);
 
 module.exports = router;

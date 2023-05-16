@@ -1,5 +1,8 @@
 const Medicine = require("../models/medicine.model");
-const { createMedicineService } = require("../services/medicine.service");
+const {
+  createMedicineService,
+  getMedicineService,
+} = require("../services/medicine.service");
 
 // for property post
 exports.createMedicine = async (req, res) => {
@@ -14,6 +17,27 @@ exports.createMedicine = async (req, res) => {
     res.status(400).json({
       status: "fail",
       error: err.message,
+    });
+  }
+};
+
+//Get all Property
+exports.getMedicine = async (req, res) => {
+  try {
+    const page = +req.query?.page;
+    const size = +req.query?.size;
+    const data = await getMedicineService(page, size);
+
+    res.status(200).json({
+      status: "success",
+      data: data.result,
+      total: data.total,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "internal error",
+      error: error.message,
     });
   }
 };
