@@ -2,6 +2,7 @@ const Medicine = require("../models/medicine.model");
 const {
   createMedicineService,
   getMedicineService,
+  getMedicineByIdService,
 } = require("../services/medicine.service");
 
 // for property post
@@ -37,6 +38,23 @@ exports.getMedicine = async (req, res) => {
     res.status(400).json({
       status: "fail",
       message: "internal error",
+      error: error.message,
+    });
+  }
+};
+
+// get Medicine by id
+exports.getMedicineById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const Medicine = await getMedicineByIdService(id);
+    res.status(200).json({
+      status: "success",
+      data: Medicine,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
       error: error.message,
     });
   }

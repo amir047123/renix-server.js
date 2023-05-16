@@ -13,3 +13,7 @@ exports.getMedicineService = async (page, size) => {
   const total = await Medicine.countDocuments({});
   return { result, total };
 };
+exports.getMedicineByIdService = async (id) => {
+  const result = await Medicine.findById(id);
+  return result;
+};
