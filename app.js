@@ -10,6 +10,7 @@ const medicineRoute = require("./routes/medicine.route");
 // middleware
 app.use(express.json());
 app.use(cors());
+app.use("/images", express.static("image"));
 
 app.use("/api/v1/upload", imageUploadRoutes);
 app.use("/api/v1/adminEdit", adminEdit);
