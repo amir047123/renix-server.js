@@ -3,6 +3,7 @@ const {
   createMedicineService,
   getMedicineService,
   getMedicineByIdService,
+  deleteMedicineService,
 } = require("../services/medicine.service");
 
 // for property post
@@ -48,6 +49,23 @@ exports.getMedicineById = async (req, res) => {
   try {
     const id = req.params.id;
     const Medicine = await getMedicineByIdService(id);
+    res.status(200).json({
+      status: "success",
+      data: Medicine,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+
+// delete medicine
+exports.deleteMedicine = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const Medicine = await deleteMedicineService(id);
     res.status(200).json({
       status: "success",
       data: Medicine,

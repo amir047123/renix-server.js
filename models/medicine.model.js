@@ -21,4 +21,3 @@ const medicineSchema = mongoose.Schema({
 
 const Medicine = mongoose.model("Medicine", medicineSchema);
 module.exports = Medicine;
-console.log(Medicine);
