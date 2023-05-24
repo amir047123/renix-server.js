@@ -1,7 +1,6 @@
 const Medicine = require("../models/medicine.model");
 
 exports.createMedicineService = async (data) => {
-  console.log(data);
   const result = await Medicine.create(data);
   return result;
 };
@@ -15,5 +14,10 @@ exports.getMedicineService = async (page, size) => {
 };
 exports.getMedicineByIdService = async (id) => {
   const result = await Medicine.findById(id);
+  return result;
+};
+
+exports.deleteMedicineService = async (id) => {
+  const result = await Medicine.deleteOne({ _id: id });
   return result;
 };
