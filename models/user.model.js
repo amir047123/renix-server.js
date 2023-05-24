@@ -29,6 +29,8 @@ const userSchema = mongoose.Schema(
       required: [true, "Please provide your Full Name"],
       trim: true,
     },
+    macAddress: Array,
+    deviceName: Array,
   },
   { timestamps: true }
 );

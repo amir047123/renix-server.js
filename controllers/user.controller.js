@@ -21,6 +21,21 @@ const sendEmail = require("../utils/emailSender");
 exports.singUp = async (req, res, next) => {
   try {
     const user = await createSignUpService(req.body);
+    const userip = new User({
+      macAddress: [],
+      deviceName: [],
+    });
+
+    userip
+      .save()
+      .then((doc) => {
+        // Document saved successfully
+      })
+      .catch((err) => {
+        console.error(err);
+        // Error saving document
+      });
+
     // token genarate
     const validateToken = jwt.sign(
       { _id: user._id },
@@ -84,8 +99,6 @@ exports.logIn = async (req, res, next) => {
   try {
     const hostname = os.hostname();
     const userIp = req.ip;
-    console.log("User ip & hostname", userIp, hostname);
-
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(401).json({
@@ -130,7 +143,7 @@ exports.logIn = async (req, res, next) => {
           macAddress: userIp,
         },
       };
-      console.log(user?.macAddress.length, filter);
+
       const updateUserWithMacAddress = await User.updateOne(filter, setUserIp);
       const updateUserWithHostName = await User.updateOne(filter, setHostName);
       //create jwt token
