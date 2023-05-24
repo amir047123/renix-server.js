@@ -7,12 +7,13 @@ const doctors = require("./routes/doctors.route");
 const imageUploadRoutes = require("./routes/imageUpload.route");
 const medicineRoute = require("./routes/medicine.route");
 const categoryRoute = require("./routes/category.route");
+const userRoutes = require("./routes/user.route");
 
 // middleware
 app.use(express.json());
 app.use(cors());
 // app.use("/images", express.static("image"));
-
+app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/upload", imageUploadRoutes);
 app.use("/api/v1/adminEdit", adminEdit);
 app.use("/api/v1/doctors", doctors);
