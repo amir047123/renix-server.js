@@ -9,3 +9,8 @@ exports.getCategoryService = async () => {
   let result = await Category.find({});
   return result;
 };
+
+exports.deleteCategoryService = async (id) => {
+  const result = await Category.deleteOne({ _id: id });
+  return result;
+};
