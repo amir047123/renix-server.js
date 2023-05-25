@@ -4,17 +4,19 @@ exports.fileUpload = async (req, res) => {
       status: "success",
       url: `${process.env.multer_url}/${req.file.filename}`,
     });
-  } catch (err) {}
+  } catch (err) {
+    res.status(500).json({ status: "error", message: "An error occurred during file upload." });
+  }
 };
+
 exports.multiFileUploads = async (req, res) => {
   try {
-    const imageUrl = [];
-    req.files.forEach((img) => {
-      imageUrl.push(`${process.env.multer_url}/${img.filename}`);
-    });
+    const imageUrls = req.files.map((img) => `${process.env.multer_url}/${img.filename}`);
     res.status(200).json({
       status: "success",
-      imageURLs: imageUrl,
+      imageURLs: imageUrls,
     });
-  } catch (err) {}
+  } catch (err) {
+    res.status(500).json({ status: "error", message: "An error occurred during file upload." });
+  }
 };

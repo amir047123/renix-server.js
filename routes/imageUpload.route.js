@@ -1,14 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const imageUploadController = require("../controllers/imageUpload.controller");
-const uploader = require("../middlewares/uploader");
+const uploader = require("./multerConfig");
+const imageUploadController = require("./imageUploadController");
 
 router.post(
   "/single-image-upload",
   uploader.single("image"),
   imageUploadController.fileUpload
 );
-
-console.log(uploader);
 
 module.exports = router;
