@@ -11,6 +11,7 @@ router.post("/forgot-password", userController.forgotPassword);
 router.route("/by-email").get(userController.getUserByQuery);
 router.post("/delete-ip/:id", userController.deleteUserIp);
 router.get("/get-user-ip", userController.getUserIp);
+router.patch("/reset-password/:id", userController.resetPassword);
 
 router
   .route("/:id")

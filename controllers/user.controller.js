@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const os = require("os");
 
 const {
@@ -132,7 +133,7 @@ exports.logIn = async (req, res, next) => {
     }
 
     const filter = { _id: user?._id };
-    if (user?.macAddress.length <= 2) {
+    if (user?.macAddress) {
       const setHostName = {
         $push: {
           deviceName: hostname,
@@ -348,6 +349,62 @@ exports.updateUser = async (req, res) => {
     res.status(400).json({
       status: "fail",
       message: "Internal error. couldn't update user ",
+      error: error.message,
+    });
+  }
+};
+const sendResetPasswordMail = async (name, email, token) => {
+  console.log(token);
+  try {
+    let url = `Your Password reset code : ${token}`;
+    await sendEmail(email, "resetPassword", { url }, (ret) => {
+      if (ret === "sent") {
+        res
+          .status(200)
+          .json({ status: "success", message: "Password reset otp send!" });
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+//reset password
+exports.resetPassword = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const isIdAvaiable = await checkWithIdService(id, User);
+    if (!isIdAvaiable) {
+      return res.status(400).json({
+        status: "fail",
+        message: "No such account",
+      });
+    }
+
+    const newPassword = req.body.password;
+
+    const hashedPassword = bcrypt.hashSync(newPassword);
+
+    const result = await updateUserService(id, { password: hashedPassword });
+
+    if (!result.modifiedCount) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Password not changed.",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "Password Changed Successfully",
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Internal error. couldn't reset password ",
       error: error.message,
     });
   }

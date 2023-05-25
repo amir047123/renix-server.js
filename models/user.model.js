@@ -29,6 +29,10 @@ const userSchema = mongoose.Schema(
       required: [true, "Please provide your Full Name"],
       trim: true,
     },
+    forgetPasswordToken: {
+      type: String,
+      default: "",
+    },
     macAddress: Array,
     deviceName: Array,
   },
