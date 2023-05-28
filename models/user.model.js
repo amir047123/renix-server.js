@@ -33,6 +33,24 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    number: {
+      type: Number,
+    },
+    city: {
+      type: String,
+      default: "",
+    },
+    country: {
+      type: String,
+      default: "",
+    },
+    address: {
+      type: String,
+      default: "",
+    },
+    zipCode: {
+      type: Number,
+    },
     macAddress: Array,
     deviceName: Array,
   },
