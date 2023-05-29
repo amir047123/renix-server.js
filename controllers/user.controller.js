@@ -262,6 +262,7 @@ exports.getUserById = async (req, res) => {
 };
 exports.getUserByQuery = async (req, res) => {
   const { email } = req.query;
+  console.log(email);
 
   try {
     const isIdAvaiable = await checkWithEmailService(email);
