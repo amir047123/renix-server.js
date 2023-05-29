@@ -12,6 +12,7 @@ exports.checkWithIdService = async (id, modelName) => {
 };
 exports.checkWithEmailService = async (email) => {
   const result = await User.findOne({ email: email });
+  console.log("user", email);
   if (result?.role) {
     return true;
   } else {
