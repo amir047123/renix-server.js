@@ -7,6 +7,9 @@ const blogsSchema = mongoose.Schema(
     category: { type: String },
     description: { type: String },
     img: { type: String },
+    date: { type: Number },
+    month: { type: Number },
+    year: { type: Number },
   },
   { timestamps: true }
 );
