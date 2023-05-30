@@ -7,6 +7,7 @@ const doctors = require("./routes/doctors.route");
 const imageUploadRoutes = require("./routes/imageUpload.route");
 const medicineRoute = require("./routes/medicine.route");
 const categoryRoute = require("./routes/category.route");
+const blogsCategoryRoute = require("./routes/blogsCategoryRoute");
 const userRoutes = require("./routes/user.route");
 
 // middleware
@@ -19,6 +20,7 @@ app.use("/api/v1/adminEdit", adminEdit);
 app.use("/api/v1/doctors", doctors);
 app.use("/api/v1/medicine", medicineRoute);
 app.use("/api/v1/category", categoryRoute);
+app.use("/api/v1/blogsCategory", blogsCategoryRoute);
 //get image
 app.get("/images/:filename", function (req, res) {
   var filename = req.params.filename;
