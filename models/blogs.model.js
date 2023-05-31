@@ -4,6 +4,7 @@ const blogsSchema = mongoose.Schema(
   {
     title: { type: String },
     author: { type: String },
+    authorImg: { type: String },
     category: { type: String },
     description: { type: String },
     img: { type: String },
