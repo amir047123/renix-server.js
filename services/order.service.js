@@ -12,3 +12,7 @@ exports.getOrderService = async (page, size) => {
   const total = await Order.countDocuments({});
   return { result, total };
 };
+exports.getOrderByIdService = async (id) => {
+  const result = await Order.find({});
+  return result;
+};

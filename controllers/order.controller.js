@@ -2,6 +2,7 @@ const Order = require("../models/order.model");
 const {
   createOrderService,
   getOrderService,
+  getOrderByIdService,
 } = require("../services/order.service");
 
 // for property post
@@ -38,6 +39,51 @@ exports.getOrder = async (req, res) => {
       status: "fail",
       message: "internal error",
       error: error.message,
+    });
+  }
+};
+
+//Get order by id
+exports.getOrderById = async (req, res) => {
+  const id = req?.params.id;
+  try {
+    const data = await getOrderByIdService(id);
+    res.status(200).json({
+      status: "success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "internal error",
+      error: error.message,
+    });
+  }
+};
+
+// get Specific order
+exports.getSpecificOrder = async (req, res) => {
+  const page = +req.query?.page;
+  const size = +req.query?.size;
+  const fieldName = req.query?.fieldName;
+  const fieldValue = req.query?.fieldValue;
+
+  try {
+    let properties = await Order.find({ [fieldName]: { $eq: fieldValue } })
+      .skip(page * size)
+      .limit(size);
+    const total = await Order.countDocuments({
+      [fieldName]: { $eq: fieldValue },
+    });
+    res.status(200).json({
+      status: "success",
+      data: properties,
+      total: total,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      error: err.message,
     });
   }
 };
