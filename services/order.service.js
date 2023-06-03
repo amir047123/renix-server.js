@@ -16,3 +16,7 @@ exports.getOrderByIdService = async (id) => {
   const result = await Order.find({});
   return result;
 };
+exports.updateOrderStatusService = async (id, data) => {
+  const result = await Order.updateOne({ _id: id }, data);
+  return result;
+};

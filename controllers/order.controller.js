@@ -3,6 +3,7 @@ const {
   createOrderService,
   getOrderService,
   getOrderByIdService,
+  updateOrderStatusService,
 } = require("../services/order.service");
 
 // for property post
@@ -84,6 +85,32 @@ exports.getSpecificOrder = async (req, res) => {
     res.status(400).json({
       status: "fail",
       error: err.message,
+    });
+  }
+};
+
+// update order status
+exports.updateOrderStatus = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await updateOrderStatusService(id, req.body);
+
+    if (!result.modifiedCount) {
+      return res.status(400).json({
+        status: "fail",
+        message: "couldn't update",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "order updated successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Internal error. couldn't update user ",
+      error: error.message,
     });
   }
 };
