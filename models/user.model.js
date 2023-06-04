@@ -52,6 +52,15 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    department: {
+      type: String,
+    },
+    doctorType: {
+      type: String,
+    },
+    doctorDegree: {
+      type: String,
+    },
     zipCode: {
       type: Number,
     },
