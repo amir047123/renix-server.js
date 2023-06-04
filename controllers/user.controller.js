@@ -450,3 +450,30 @@ exports.deleteUserIp = async (req, res) => {
     });
   }
 };
+
+// get Specific User
+exports.getSpecificUser = async (req, res) => {
+  const page = +req.query?.page;
+  const size = +req.query?.size;
+  const fieldName = req.query?.fieldName;
+  const fieldValue = req.query?.fieldValue;
+
+  try {
+    let users = await User.find({ [fieldName]: { $eq: fieldValue } })
+      .skip(page * size)
+      .limit(size);
+    const total = await User.countDocuments({
+      [fieldName]: { $eq: fieldValue },
+    });
+    res.status(200).json({
+      status: "success",
+      data: users,
+      total: total,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      error: err.message,
+    });
+  }
+};
