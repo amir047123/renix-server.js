@@ -192,39 +192,16 @@ exports.getMe = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    let filters = { ...req.query };
-    const excludesFields = ["sort", "fields", "search"];
+    const page = +req.query?.page;
+    const size = +req.query?.size;
+    const filter = req.query?.filter;
 
-    excludesFields.forEach((field) => {
-      delete filters[field];
-    });
-    let queries = {};
-
-    if (req.query.search) {
-      let oldFilters = filters;
-      filters = {
-        ...oldFilters,
-      };
-    }
-
-    if (req.query.sort) {
-      let sortCateory = req.query.sort;
-      sortCateory = sortCateory.split(",").join(" ");
-      queries.sort = sortCateory;
-    }
-
-    if (req.query.fields) {
-      let selectCategory = req.query.fields.split(",").join(" ");
-      queries.fields = selectCategory;
-    }
-
-    const user = await getUserService(filters, queries);
+    const data = await getUserService(page, size, filter);
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: user,
-      },
+      data: data.result,
+      total: data.total,
     });
   } catch (error) {
     res.status(400).json({
@@ -472,4 +449,35 @@ exports.deleteUserIp = async (req, res) => {
       message: "Internal error. couldn't update user ",
     });
   }
+<<<<<<< HEAD
 };
+=======
+};
+
+// get Specific User
+exports.getSpecificUser = async (req, res) => {
+  const page = +req.query?.page;
+  const size = +req.query?.size;
+  const fieldName = req.query?.fieldName;
+  const fieldValue = req.query?.fieldValue;
+
+  try {
+    let users = await User.find({ [fieldName]: { $eq: fieldValue } })
+      .skip(page * size)
+      .limit(size);
+    const total = await User.countDocuments({
+      [fieldName]: { $eq: fieldValue },
+    });
+    res.status(200).json({
+      status: "success",
+      data: users,
+      total: total,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      error: err.message,
+    });
+  }
+};
+>>>>>>> 20778b9e4c64027def8dfb83b58d197606a3d288
