@@ -192,39 +192,16 @@ exports.getMe = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    let filters = { ...req.query };
-    const excludesFields = ["sort", "fields", "search"];
+    const page = +req.query?.page;
+    const size = +req.query?.size;
+    const filter = req.query?.filter;
 
-    excludesFields.forEach((field) => {
-      delete filters[field];
-    });
-    let queries = {};
-
-    if (req.query.search) {
-      let oldFilters = filters;
-      filters = {
-        ...oldFilters,
-      };
-    }
-
-    if (req.query.sort) {
-      let sortCateory = req.query.sort;
-      sortCateory = sortCateory.split(",").join(" ");
-      queries.sort = sortCateory;
-    }
-
-    if (req.query.fields) {
-      let selectCategory = req.query.fields.split(",").join(" ");
-      queries.fields = selectCategory;
-    }
-
-    const user = await getUserService(filters, queries);
+    const data = await getUserService(page, size, filter);
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: user,
-      },
+      data: data.result,
+      total: data.total,
     });
   } catch (error) {
     res.status(400).json({
