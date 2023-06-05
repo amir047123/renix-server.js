@@ -3,6 +3,7 @@ const {
   createAppointmentService,
   updateAppointmentStatusService,
   getAppointmentByIdService,
+  getAppointmentService,
 } = require("../services/appointment.service");
 
 // for property post
@@ -91,6 +92,27 @@ exports.getAppointmentById = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "internal error",
+      error: error.message,
+    });
+  }
+};
+
+//Get all appointment
+exports.getAppointment = async (req, res) => {
+  try {
+    const page = +req.query?.page;
+    const size = +req.query?.size;
+    const data = await getAppointmentService(page, size);
+
+    res.status(200).json({
+      status: "success",
+      data: data.result,
+      total: data.total,
     });
   } catch (error) {
     res.status(400).json({

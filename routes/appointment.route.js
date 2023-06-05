@@ -4,11 +4,12 @@ const {
   getSpecificAppointment,
   updateAppointmentStatus,
   getAppointmentById,
+  getAppointment,
 } = require("../controllers/appointment.controller");
 
 const router = express.Router();
 
-// router.route("/").get(getOrder);
+router.route("/").get(getAppointment);
 router.route("/getAppointment/:id").get(getAppointmentById);
 router.route("/postAppointment").post(createAppointment);
 router.route("/specific").get(getSpecificAppointment);

@@ -13,3 +13,10 @@ exports.getAppointmentByIdService = async (id) => {
   const result = await Appointment.find({ patientId: { $eq: id } });
   return result;
 };
+exports.getAppointmentService = async (page, size) => {
+  let result = await Appointment.find({})
+    .skip(page * size)
+    .limit(size);
+  const total = await Order.countDocuments({});
+  return { result, total };
+};

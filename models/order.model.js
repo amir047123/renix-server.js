@@ -6,6 +6,7 @@ const orderSchema = mongoose.Schema(
     customerDetails: { type: Object },
     orderStatus: { type: String, default: "pending" },
     customerId: { type: String },
+    subTotal: { type: Number },
   },
   { timestamps: true }
 );
