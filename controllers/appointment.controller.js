@@ -26,17 +26,23 @@ exports.createAppointment = async (req, res) => {
 exports.getSpecificAppointment = async (req, res) => {
   const page = +req.query?.page;
   const size = +req.query?.size;
-  const fieldName = req.query?.fieldName;
-  const fieldValue = req.query?.fieldValue;
+  const doctorId = req.query?.doctorId;
+  const appointmentStatus = req.query?.appointmentStatus;
 
   try {
     let appointment = await Appointment.find({
-      [fieldName]: { $eq: fieldValue },
+      $and: [
+        { doctorId: { $eq: doctorId } },
+        { appointmentStatus: { $eq: appointmentStatus } },
+      ],
     })
       .skip(page * size)
       .limit(size);
     const total = await Appointment.countDocuments({
-      [fieldName]: { $eq: fieldValue },
+      $and: [
+        { doctorId: { $eq: doctorId } },
+        { appointmentStatus: { $eq: appointmentStatus } },
+      ],
     });
     res.status(200).json({
       status: "success",
