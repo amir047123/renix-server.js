@@ -13,7 +13,7 @@ exports.getOrderService = async (page, size) => {
   return { result, total };
 };
 exports.getOrderByIdService = async (id) => {
-  const result = await Order.find({});
+  const result = await Order.find({ customerId: { $eq: id } });
   return result;
 };
 exports.updateOrderStatusService = async (id, data) => {
