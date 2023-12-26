@@ -4,6 +4,7 @@ const {
   getMedicineService,
   getMedicineByIdService,
   deleteMedicineService,
+  updateMedicineService,
 } = require("../services/medicine.service");
 
 // for property post
@@ -23,7 +24,7 @@ exports.createMedicine = async (req, res) => {
   }
 };
 
-//Get all Property
+// Get all Property
 exports.getMedicine = async (req, res) => {
   try {
     const page = +req.query?.page;
@@ -44,14 +45,14 @@ exports.getMedicine = async (req, res) => {
   }
 };
 
-// get Medicine by id
+// Get Medicine by id
 exports.getMedicineById = async (req, res) => {
   try {
     const id = req.params.id;
-    const Medicine = await getMedicineByIdService(id);
+    const medicine = await getMedicineByIdService(id);
     res.status(200).json({
       status: "success",
-      data: Medicine,
+      data: medicine,
     });
   } catch (error) {
     res.status(400).json({
@@ -61,14 +62,55 @@ exports.getMedicineById = async (req, res) => {
   }
 };
 
-// delete medicine
+// Update medicine
+exports.updateMedicine = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const updatedMedicine = await Medicine.findByIdAndUpdate(
+      id,
+      data,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!updatedMedicine) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Medicine not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: updatedMedicine,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+
+// Delete medicine
 exports.deleteMedicine = async (req, res) => {
   try {
     const id = req.params.id;
-    const Medicine = await deleteMedicineService(id);
+    const deletedMedicine = await deleteMedicineService(id);
+
+    if (!deletedMedicine) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Medicine not found",
+      });
+    }
+
     res.status(200).json({
       status: "success",
-      data: Medicine,
+      data: deletedMedicine,
     });
   } catch (error) {
     res.status(400).json({

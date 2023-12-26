@@ -12,6 +12,8 @@ const blogsRoute = require("./routes/blogs.route");
 const orderRoute = require("./routes/order.route");
 const userRoutes = require("./routes/user.route");
 const appointmentRoute = require("./routes/appointment.route");
+const contactRenix = require("./routes/contactRenix.route")
+const collectEmail = require("./routes/collectEmail.route")
 
 // middleware
 app.use(express.json());
@@ -27,6 +29,9 @@ app.use("/api/v1/blogsCategory", blogsCategoryRoute);
 app.use("/api/v1/blogs", blogsRoute);
 app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/appointment", appointmentRoute);
+app.use("/api/v1/contactRenix", contactRenix);
+app.use("/api/v1/collectEmail", collectEmail);
+
 //get image
 app.get("/images/:filename", function (req, res) {
   var filename = req.params.filename;

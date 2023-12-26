@@ -449,9 +449,6 @@ exports.deleteUserIp = async (req, res) => {
       message: "Internal error. couldn't update user ",
     });
   }
-<<<<<<< HEAD
-};
-=======
 };
 
 // get Specific User
@@ -480,4 +477,3 @@ exports.getSpecificUser = async (req, res) => {
     });
   }
 };
->>>>>>> 20778b9e4c64027def8dfb83b58d197606a3d288
