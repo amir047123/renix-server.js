@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const medicineSchema = mongoose.Schema({
   name: { type: String },
+  discount: { type: Number },
   genericName: { type: String },
   supplierName: { type: String },
   medicineCategory: { type: String },
