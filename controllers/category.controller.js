@@ -2,6 +2,8 @@ const {
   createCategoryService,
   getCategoryService,
   deleteCategoryService,
+  getCategoryByIdService,
+  updateCategoryByIdService,
 } = require("../services/category.service");
 
 // for property post
@@ -43,6 +45,38 @@ exports.deleteCategory = async (req, res) => {
   try {
     const id = req.params.id;
     const Category = await deleteCategoryService(id);
+    res.status(200).json({
+      status: "success",
+      data: Category,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+// get  category by id
+exports.getCategoryById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const Category = await getCategoryByIdService(id);
+    res.status(200).json({
+      status: "success",
+      data: Category,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+// get  category by id
+exports.updateCategoryById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const Category = await updateCategoryByIdService(id, req.body);
     res.status(200).json({
       status: "success",
       data: Category,
