@@ -18,6 +18,24 @@ const medicineSchema = mongoose.Schema({
   category: { type: String },
   description: { type: String },
   img: { type: String },
+  // meta seo
+  metaTitle: {
+    type: String,
+  },
+  metaDescription: {
+    type: String,
+  },
+  metaImage: {
+    type: String,
+  },
+  canonicalUrl: {
+    type: String,
+  },
+  slug: {
+    type: String,
+    required: [true, "Please provide category"],
+    unique: true,
+  },
 });
 
 const Medicine = mongoose.model("Medicine", medicineSchema);

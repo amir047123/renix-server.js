@@ -14,3 +14,14 @@ exports.deleteBlogsCategoryService = async (id) => {
   const result = await BlogsCategory.deleteOne({ _id: id });
   return result;
 };
+exports.updateBlogsCategoryService = async (id, data) => {
+  const result = await BlogsCategory.findOneAndUpdate({ _id: id }, data, {
+    new: true,
+  });
+  return result;
+};
+exports.getBlogCategoryByService = async (id) => {
+  const result = await BlogsCategory.findOne({ _id: id });
+
+  return result;
+};
