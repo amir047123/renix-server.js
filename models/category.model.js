@@ -20,7 +20,7 @@ const categorySchema = mongoose.Schema({
   },
   slug: {
     type: String,
-    required: [true, "Please provide category"],
+    // required: [true, "Please provide category"],
     unique: true,
   },
 });
