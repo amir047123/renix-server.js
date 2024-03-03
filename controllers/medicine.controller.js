@@ -120,7 +120,6 @@ exports.deleteMedicine = async (req, res) => {
   }
 };
 
-
 // Get specific Medicines
 exports.getSpecificMedicines = async (req, res) => {
   const page = +req.query?.page;

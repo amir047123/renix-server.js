@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
-const categorySchema = mongoose.Schema({
-  name: {
+const seoSchema = new mongoose.Schema({
+  page: {
     type: String,
-    required: [true, "Please provide category"],
+    required: [true, "Page is required"],
+    unique: true,
   },
   // meta seo
   metaTitle: {
@@ -20,10 +21,9 @@ const categorySchema = mongoose.Schema({
   },
   slug: {
     type: String,
-    // required: [true, "Please provide category"],
-    unique: true,
   },
 });
 
-const Category = mongoose.model("Category", categorySchema);
-module.exports = Category;
+const Seo = mongoose.model("Seo", seoSchema);
+
+module.exports = Seo;
