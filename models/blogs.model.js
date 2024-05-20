@@ -11,6 +11,24 @@ const blogsSchema = mongoose.Schema(
     date: { type: Number },
     month: { type: Number },
     year: { type: Number },
+    // meta seo
+    metaTitle: {
+      type: String,
+    },
+    metaDescription: {
+      type: String,
+    },
+    metaImage: {
+      type: String,
+    },
+    canonicalUrl: {
+      type: String,
+    },
+    slug: {
+      type: String,
+      required: [true, "Please provide category"],
+      unique: true,
+    },
   },
   { timestamps: true }
 );

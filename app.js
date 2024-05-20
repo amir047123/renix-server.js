@@ -16,7 +16,7 @@ const contactRenix = require("./routes/contactRenix.route")
 const collectEmail = require("./routes/collectEmail.route")
 const shippingRoutes = require("./routes/shipping.route")
 const newsAndMediaRouter = require("./routes/newsAndMedia.route");
-
+const seoRoutes = require("./routes/seo.route");
 // middleware
 app.use(express.json());
 app.use(cors());
@@ -37,6 +37,8 @@ app.use("/api/v1/collectEmail", collectEmail);
 app.use("/api/v1/shipping", shippingRoutes);
 
 app.use("/api/v1/newsAndMedia", newsAndMediaRouter);
+
+app.use("/api/v1/seo", seoRoutes);
 
 //get image
 app.get("/images/:filename", function (req, res) {
