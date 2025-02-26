@@ -28,12 +28,22 @@ exports.createCollectEmail = async (req, res) => {
 // Get Collect Emails
 exports.getCollectEmails = async (req, res) => {
   try {
-    const { page = 0, size = 10, ...filters } = req.query;
-    const collectEmails = await CollectEmail.find(filters)
+    const page = +req.query?.page;
+    const size = +req.query?.size;
+    const filter = req.query?.filter;
+
+    const query = {};
+
+    if (filter) {
+      query.$or = [{ email: { $regex: filter, $options: "i" } }];
+    }
+
+    const collectEmails = await CollectEmail.find(query)
+      .sort({ createdAt: -1 })
       .skip(page * size)
       .limit(size);
 
-    const total = await CollectEmail.countDocuments(filters);
+    const total = await CollectEmail.countDocuments(query);
 
     res.status(200).json({
       status: "success",

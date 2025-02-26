@@ -34,11 +34,17 @@ exports.createSeo = async (req, res) => {
 };
 exports.getAllSeo = async (req, res) => {
   try {
-    const allSeo = await getAllSeoService();
+    const page = +req.query?.page;
+    const size = +req.query?.size;
+    const filter = req.query?.filter;
+
+    const allSeo = await getAllSeoService(page, size, filter);
+
     return res.status(200).json({
       status: "success",
       message: "All seo data get successfully",
-      data: allSeo,
+      data: allSeo.seo,
+      total: allSeo.total,
     });
   } catch (error) {
     console.log(error.message);

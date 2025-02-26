@@ -36,6 +36,10 @@ const medicineSchema = mongoose.Schema({
     required: [true, "Please provide category"],
     unique: true,
   },
+  isSpecial: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Medicine = mongoose.model("Medicine", medicineSchema);

@@ -16,6 +16,7 @@ exports.getUserService = async (page = 1, size = 10, filter) => {
   }
 
   const result = await User.find(query)
+    .sort({ createdAt: -1 })
     .skip(page * size)
     .limit(size);
 

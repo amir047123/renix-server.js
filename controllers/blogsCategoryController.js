@@ -26,7 +26,12 @@ exports.createBlogsCategory = async (req, res) => {
 //Get all category
 exports.getBlogsCategory = async (req, res) => {
   try {
-    const data = await getBlogsCategoryService();
+    const { page, size, filter } = req.query;
+    const data = await getBlogsCategoryService(
+      parseInt(page),
+      parseInt(size),
+      filter
+    );
     res.status(200).json({
       status: "success",
       data: data,
