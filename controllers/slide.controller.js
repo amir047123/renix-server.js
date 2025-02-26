@@ -43,7 +43,7 @@ exports.getSlide = async (req, res) => {
       ];
     }
 
-    ["fieldName", "fieldName2", "fieldName3"].forEach((field, index) => {
+    ["fieldName1", "fieldName2", "fieldName3"].forEach((field, index) => {
       const fieldValue = req.query[`fieldValue${index + 1}`];
       if (req.query[field] && fieldValue) {
         query[req.query[field]] = fieldValue;

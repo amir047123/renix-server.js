@@ -5,7 +5,7 @@ exports.createCategoryService = async (data) => {
   return result;
 };
 
-exports.getCategoryService = async (page = 1, size = 10, filter) => {
+exports.getCategoryService = async (page = 0, size = 10, filter) => {
   const query = {};
 
   if (filter) {

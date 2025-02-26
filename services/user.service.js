@@ -4,7 +4,7 @@ exports.createSignUpService = async (data) => {
   let result = await User.create(data);
   return result;
 };
-exports.getUserService = async (page = 1, size = 10, filter) => {
+exports.getUserService = async (page = 0, size = 10, filter) => {
   const query = {};
 
   if (filter) {

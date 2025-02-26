@@ -46,7 +46,7 @@ exports.getNewsAndMedia = async (req, res) => {
       ];
     }
 
-    ["fieldName", "fieldName2", "fieldName3"].forEach((field, index) => {
+    ["fieldName1", "fieldName2", "fieldName3"].forEach((field, index) => {
       const fieldValue = req.query[`fieldValue${index + 1}`];
       if (req.query[field] && fieldValue) {
         query[req.query[field]] = fieldValue;
@@ -136,33 +136,38 @@ exports.getNewsAndMediaById = async (req, res) => {
 
 // Get Specific News and Media
 exports.getSpecificNewsAndMedia = async (req, res) => {
-  const page = +req.query?.page;
-  const size = +req.query?.size;
-  const fieldName = req.query?.fieldName;
-  const fieldValue = req.query?.fieldValue;
-  const fieldName2 = req.query?.fieldName2;
-  const fieldValue2 = req.query?.fieldValue2;
-  const fieldName3 = req.query?.fieldName3;
-  const fieldValue3 = req.query?.fieldValue3;
-
   try {
-    const newsAndMedia = await NewsAndMedia.find({
-      $and: [
-        { [fieldName]: { $eq: fieldValue } },
-        { [fieldName2]: { $eq: fieldValue2 } },
-        { [fieldName3]: { $eq: fieldValue3 } },
-      ],
-    })
+    const page = parseInt(req.query.page) || 0;
+    const size = parseInt(req.query.size) || 10;
+    const filter = req.query.filter;
+
+    const query = {};
+
+    if (filter) {
+      query.$or = [
+        { newsTitle: { $regex: filter, $options: "i" } },
+        { newsCategory: { $regex: filter, $options: "i" } },
+        { newsDescription: { $regex: filter, $options: "i" } },
+        { youtubeLink: { $regex: filter, $options: "i" } },
+        { metaTitle: { $regex: filter, $options: "i" } },
+        { metaDescription: { $regex: filter, $options: "i" } },
+        { slug: { $regex: filter, $options: "i" } },
+        { canonicalUrl: { $regex: filter, $options: "i" } },
+      ];
+    }
+
+    ["fieldName1", "fieldName2", "fieldName3"].forEach((field, index) => {
+      const fieldValue = req.query[`fieldValue${index + 1}`];
+      if (req.query[field] && fieldValue) {
+        query[req.query[field]] = fieldValue;
+      }
+    });
+
+    const newsAndMedia = await NewsAndMedia.find(query)
       .skip(page * size)
       .limit(size);
 
-    const total = await NewsAndMedia.countDocuments({
-      $and: [
-        { [fieldName]: { $eq: fieldValue } },
-        { [fieldName2]: { $eq: fieldValue2 } },
-        { [fieldName3]: { $eq: fieldValue3 } },
-      ],
-    });
+    const total = await NewsAndMedia.countDocuments(query);
 
     res.status(200).json({
       status: "success",

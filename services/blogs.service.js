@@ -5,7 +5,7 @@ exports.createBlogsService = async (data) => {
   return result;
 };
 
-exports.getBlogsService = async (page = 1, size = 10, filter) => {
+exports.getBlogsService = async (page = 0, size = 10, filter) => {
   const query = {};
 
   if (filter) {

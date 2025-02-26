@@ -29,7 +29,9 @@ exports.getMedicine = async (req, res) => {
   try {
     const page = +req.query?.page;
     const size = +req.query?.size;
-    const data = await getMedicineService(page, size);
+    const filter = req.query?.filter;
+    const isSpecial = req.query?.isSpecial;
+    const data = await getMedicineService(page, size, filter, isSpecial);
 
     res.status(200).json({
       status: "success",
@@ -67,14 +69,10 @@ exports.updateMedicine = async (req, res) => {
   try {
     const id = req.params.id;
     const data = req.body;
-    const updatedMedicine = await Medicine.findByIdAndUpdate(
-      id,
-      data,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const updatedMedicine = await Medicine.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!updatedMedicine) {
       return res.status(404).json({
@@ -122,33 +120,50 @@ exports.deleteMedicine = async (req, res) => {
 
 // Get specific Medicines
 exports.getSpecificMedicines = async (req, res) => {
-  const page = +req.query?.page;
-  const size = +req.query?.size;
-  const fieldName = req.query?.fieldName;
-  const fieldValue = req.query?.fieldValue;
-  const fieldName2 = req.query?.fieldName2;
-  const fieldValue2 = req.query?.fieldValue2;
-  const fieldName3 = req.query?.fieldName3;
-  const fieldValue3 = req.query?.fieldValue3;
-
   try {
-    const Medicines = await Medicine.find({
-      $and: [
-        { [fieldName]: { $eq: fieldValue } },
-        { [fieldName2]: { $eq: fieldValue2 } },
-        { [fieldName3]: { $eq: fieldValue3 } },
-      ],
-    })
+    const page = parseInt(req.query.page) || 0;
+    const size = parseInt(req.query.size) || 10;
+    const filter = req.query.filter;
+    const isSpecial = req.query.isSpecial;
+
+    const query = {};
+
+    if (filter) {
+      query.$or = [
+        { name: { $regex: filter, $options: "i" } },
+        { genericName: { $regex: filter, $options: "i" } },
+        { supplierName: { $regex: filter, $options: "i" } },
+        { medicineCategory: { $regex: filter, $options: "i" } },
+        { medicineStatus: { $regex: filter, $options: "i" } },
+        { medicineType: { $regex: filter, $options: "i" } },
+        { securityCode: { $regex: filter, $options: "i" } },
+        { stock: { $regex: filter, $options: "i" } },
+        { strength: { $regex: filter, $options: "i" } },
+        { category: { $regex: filter, $options: "i" } },
+        { description: { $regex: filter, $options: "i" } },
+        { metaTitle: { $regex: filter, $options: "i" } },
+        { metaDescription: { $regex: filter, $options: "i" } },
+        { slug: { $regex: filter, $options: "i" } },
+        { canonicalUrl: { $regex: filter, $options: "i" } },
+      ];
+    }
+
+    if (isSpecial) {
+      query.isSpecial = isSpecial === "yes" ? true : false;
+    }
+
+    ["fieldName1", "fieldName2", "fieldName3"].forEach((field, index) => {
+      const fieldValue = req.query[`fieldValue${index + 1}`];
+      if (req.query[field] && fieldValue) {
+        query[req.query[field]] = fieldValue;
+      }
+    });
+
+    const Medicines = await Medicine.find(query)
       .skip(page * size)
       .limit(size);
 
-    const total = await Medicine.countDocuments({
-      $and: [
-        { [fieldName]: { $eq: fieldValue } },
-        { [fieldName2]: { $eq: fieldValue2 } },
-        { [fieldName3]: { $eq: fieldValue3 } },
-      ],
-    });
+    const total = await Medicine.countDocuments(query);
 
     res.status(200).json({
       status: "success",
