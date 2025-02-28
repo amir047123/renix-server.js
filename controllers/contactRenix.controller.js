@@ -28,12 +28,27 @@ exports.createContactRenix = async (req, res) => {
 // Get Contact Renix
 exports.getContactRenixes = async (req, res) => {
   try {
-    const { page = 0, size = 10, ...filters } = req.query;
-    const contactRenixes = await ContactRenix.find(filters)
+    const page = +req.query?.page;
+    const size = +req.query?.size;
+    const filter = req.query?.filter;
+
+    const query = {};
+
+    if (filter) {
+      query.$or = [
+        { email: { $regex: filter, $options: "i" } },
+        { name: { $regex: filter, $options: "i" } },
+        { subject: { $regex: filter, $options: "i" } },
+        { message: { $regex: filter, $options: "i" } },
+      ];
+    }
+
+    const contactRenixes = await ContactRenix.find(query)
+      .sort({ createdAt: -1 })
       .skip(page * size)
       .limit(size);
 
-    const total = await ContactRenix.countDocuments(filters);
+    const total = await ContactRenix.countDocuments(query);
 
     res.status(200).json({
       status: "success",

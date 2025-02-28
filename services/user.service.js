@@ -4,20 +4,23 @@ exports.createSignUpService = async (data) => {
   let result = await User.create(data);
   return result;
 };
-exports.getUserService = async (page, size, filter) => {
-  let result;
+exports.getUserService = async (page = 0, size = 10, filter) => {
+  const query = {};
+
   if (filter) {
-    result = await User.find({
-      email: { $eq: filter },
-    })
-      .skip(page * size)
-      .limit(size);
-  } else {
-    result = await User.find({})
-      .skip(page * size)
-      .limit(size);
+    query.$or = [
+      { email: { $regex: filter, $options: "i" } },
+      { role: { $regex: filter, $options: "i" } },
+      { fullName: { $regex: filter, $options: "i" } },
+    ];
   }
-  const total = await User.countDocuments({});
+
+  const result = await User.find(query)
+    .sort({ createdAt: -1 })
+    .skip(page * size)
+    .limit(size);
+
+  const total = await User.countDocuments(query);
   return { result, total };
 };
 

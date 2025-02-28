@@ -5,9 +5,26 @@ exports.createBlogsCategoryService = async (data) => {
   return result;
 };
 
-exports.getBlogsCategoryService = async () => {
-  let result = await BlogsCategory.find({});
-  return result;
+exports.getBlogsCategoryService = async (page = 0, size = 10, filter) => {
+  const query = {};
+
+  if (filter) {
+    query.$or = [
+      { name: { $regex: filter, $options: "i" } },
+      { metaTitle: { $regex: filter, $options: "i" } },
+      { metaDescription: { $regex: filter, $options: "i" } },
+      { canonicalUrl: { $regex: filter, $options: "i" } },
+      { slug: { $regex: filter, $options: "i" } },
+    ];
+  }
+
+  const result = await BlogsCategory.find(query)
+    .sort({ createdAt: -1 })
+    .skip(page * size)
+    .limit(size);
+
+  const total = await BlogsCategory.countDocuments(query);
+  return { result, total };
 };
 
 exports.deleteBlogsCategoryService = async (id) => {

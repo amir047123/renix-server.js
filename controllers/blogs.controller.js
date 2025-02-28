@@ -4,6 +4,7 @@ const {
   getBlogsService,
   getBlogsByIdService,
   deleteBlogsService,
+  updateBlogsService,
 } = require("../services/blogs.service");
 
 // for property post
@@ -28,7 +29,8 @@ exports.getBlog = async (req, res) => {
   try {
     const page = +req.query?.page;
     const size = +req.query?.size;
-    const data = await getBlogsService(page, size);
+    const filter = req.query?.filter;
+    const data = await getBlogsService(page, size, filter);
 
     res.status(200).json({
       status: "success",
@@ -66,6 +68,23 @@ exports.deleteBlog = async (req, res) => {
   try {
     const id = req.params.id;
     const Blog = await deleteBlogsService(id);
+    res.status(200).json({
+      status: "success",
+      data: Blog,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error: error.message,
+    });
+  }
+};
+
+// update Blog
+exports.updateBlog = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const Blog = await updateBlogsService(id, req.body);
     res.status(200).json({
       status: "success",
       data: Blog,

@@ -26,10 +26,16 @@ exports.createCategory = async (req, res) => {
 //Get all category
 exports.getCategory = async (req, res) => {
   try {
-    const data = await getCategoryService();
+    const { page, size, filter } = req.query;
+    const data = await getCategoryService(
+      parseInt(page),
+      parseInt(size),
+      filter
+    );
     res.status(200).json({
       status: "success",
-      data: data,
+      data: data.result,
+      total: data.total,
     });
   } catch (error) {
     res.status(400).json({

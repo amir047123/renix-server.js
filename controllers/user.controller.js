@@ -192,11 +192,9 @@ exports.getMe = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    const page = +req.query?.page;
-    const size = +req.query?.size;
-    const filter = req.query?.filter;
+    const { page, size, filter } = req.query;
 
-    const data = await getUserService(page, size, filter);
+    const data = await getUserService(parseInt(page), parseInt(size), filter);
 
     res.status(200).json({
       status: "success",

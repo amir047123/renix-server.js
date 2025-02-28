@@ -5,9 +5,26 @@ exports.createCategoryService = async (data) => {
   return result;
 };
 
-exports.getCategoryService = async () => {
-  let result = await Category.find({});
-  return result;
+exports.getCategoryService = async (page = 0, size = 10, filter) => {
+  const query = {};
+
+  if (filter) {
+    query.$or = [
+      { name: { $regex: filter, $options: "i" } },
+      { metaTitle: { $regex: filter, $options: "i" } },
+      { metaDescription: { $regex: filter, $options: "i" } },
+      { slug: { $regex: filter, $options: "i" } },
+    ];
+  }
+
+  const result = await Category.find(query)
+    .sort({ createdAt: -1 })
+    .skip(page * size)
+    .limit(size);
+
+  const total = await Category.countDocuments(query);
+
+  return { result, total };
 };
 
 exports.deleteCategoryService = async (id) => {
@@ -24,4 +41,3 @@ exports.updateCategoryByIdService = async (id, data) => {
   });
   return result;
 };
-
