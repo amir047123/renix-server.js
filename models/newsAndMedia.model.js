@@ -32,6 +32,8 @@ const newsAndMediaSchema = new Schema({
   },
   slug: {
     type: String,
+    required: [true, "Please provide unique slug"],
+    unique: true,
   },
 });
 

@@ -19,7 +19,9 @@ const newsAndMediaRouter = require("./routes/newsAndMedia.route");
 const seoRoutes = require("./routes/seo.route");
 const slideRouter = require("./routes/slide.route");
 // middleware
-app.use(express.json());
+// Increase payload size limit (e.g., 50MB)
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 // app.use("/images", express.static("image"));
 app.use("/api/v1/user", userRoutes);

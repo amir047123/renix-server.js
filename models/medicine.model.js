@@ -35,7 +35,7 @@ const medicineSchema = mongoose.Schema(
     },
     slug: {
       type: String,
-      required: [true, "Please provide category"],
+      required: [true, "Please provide unique slug"],
       unique: true,
     },
     isSpecial: {
