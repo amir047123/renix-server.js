@@ -33,6 +33,9 @@ const medicineSchema = mongoose.Schema(
     canonicalUrl: {
       type: String,
     },
+    orderUrl: {
+      type: String,
+    },
     slug: {
       type: String,
       required: [true, "Please provide unique slug"],
