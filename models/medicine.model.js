@@ -17,6 +17,7 @@ const medicineSchema = mongoose.Schema({
   strength: { type: String },
   category: { type: String },
   description: { type: String },
+  fullDescription: { type: mongoose.Schema.Types.Mixed },
   img: { type: String },
   // meta seo
   metaTitle: {
