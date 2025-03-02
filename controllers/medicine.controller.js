@@ -160,6 +160,7 @@ exports.getSpecificMedicines = async (req, res) => {
     });
 
     const Medicines = await Medicine.find(query)
+      // .select("-fullDescription")
       .skip(page * size)
       .limit(size);
 

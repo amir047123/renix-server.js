@@ -33,11 +33,13 @@ exports.getMedicineService = async (page = 0, size = 10, filter, isSpecial) => {
   }
 
   const result = await Medicine.find(query)
+    .select("-fullDescription") // ✅ Corrected `.select()` placement
     .sort({ createdAt: -1 })
     .skip(page * size)
     .limit(size);
 
   const total = await Medicine.countDocuments(query);
+
   return { result, total };
 };
 
