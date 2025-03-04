@@ -6,6 +6,7 @@ const {
   deleteMedicineService,
   updateMedicineService,
 } = require("../services/medicine.service");
+const mongoose = require("mongoose");
 
 // for property post
 exports.createMedicine = async (req, res) => {
@@ -161,6 +162,8 @@ exports.getSpecificMedicines = async (req, res) => {
 
     const Medicines = await Medicine.find(query)
       // .select("-fullDescription")
+      .select("-fullDescription") // ✅ Corrected `.select()` placement
+
       .skip(page * size)
       .limit(size);
 
@@ -173,6 +176,39 @@ exports.getSpecificMedicines = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
+      status: "fail",
+      error: error.message || "Internal server error",
+    });
+  }
+};
+
+// Get only fullDescription by id
+exports.getMedicineFullDescription = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Invalid Medicine ID",
+      });
+    }
+
+    const medicine = await Medicine.findById(id).select("fullDescription");
+
+    if (!medicine) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Medicine not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: medicine.fullDescription,
+    });
+  } catch (error) {
+    res.status(500).json({
       status: "fail",
       error: error.message || "Internal server error",
     });
